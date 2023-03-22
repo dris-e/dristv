@@ -1,3 +1,42 @@
+const loginForm = document.getElementById('loginForm');
+const login = document.getElementById('login');
+const content = document.getElementById('content');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+
+loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+  
+    try {
+      const response = await fetch('/authenticate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      if (response.ok) {
+        const { token } = await response.json();
+        login.style.display = 'none';
+        content.style.display = 'block';
+        socket.auth = { token };
+        socket.connect();
+        initLiveStreaming();
+      } else {
+        alert('Invalid username or password.');
+      }
+    } catch (err) {
+      console.error('Error during authentication', err);
+    }
+  });
+  
+  const socket = io({ autoConnect: false });
+  
+
+function initLiveStreaming() {
+  
+
 const socket = io();
 const localVideo = document.getElementById('localVideo');
 const remoteVideo = document.getElementById('remoteVideo');
@@ -50,3 +89,4 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream =>
     console.error('Error accessing media devices.', err);
   });
   
+}
