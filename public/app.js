@@ -30,12 +30,6 @@ loginForm.addEventListener('submit', async (event) => {
       console.error('Error during authentication', err);
     }
   });
-  
-  const socket = io({ autoConnect: false });
-  
-
-function initLiveStreaming() {
-  
 
 const socket = io();
 const localVideo = document.getElementById('localVideo');
@@ -76,6 +70,8 @@ socket.on('broadcast', (data) => {
       break;
   }
 });
+
+function initLiveStreaming() {
 
 navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
     localVideo.srcObject = stream;

@@ -8,6 +8,12 @@ const bcrypt = require('bcrypt');
 app.use(express.json());
 app.use(express.static('public'));
 
+require('dotenv').config();
+
+const USERNAME = process.env.USERNAME;
+const PASSWORD = process.env.PASSWORD;
+const JWT_SECRET = process.env.JWT_SECRET;
+
 // Hash the password
 const hashedPassword = bcrypt.hashSync(PASSWORD, 10);
 
@@ -48,8 +54,4 @@ server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-require('dotenv').config();
 
-const USERNAME = process.env.USERNAME;
-const PASSWORD = process.env.PASSWORD;
-const JWT_SECRET = process.env.JWT_SECRET;
